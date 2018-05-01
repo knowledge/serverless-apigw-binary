@@ -124,6 +124,7 @@ class BinarySupport {
   }
 
   putSwagger(swagger) {
+    console.log('DEBUG', 'putSwagger', 'swagger', util.inspect(swaggerInput, {showHidden: false, depth: null}))
     return this.provider.request('APIGateway', 'putRestApi', { restApiId: this.apiId, mode: 'merge', body: JSON.stringify(swagger) });
   }
 
