@@ -1,5 +1,6 @@
 'use strict';
 
+const util = require('util');
 const deepEqual = require('deep-equal');
 const clone = require('clone');
 const genOptionsBlock = require('./gen-options');
@@ -84,6 +85,7 @@ class BinarySupport {
   }
 
   updateSwagger(swaggerInput) {
+    console.log('DEBUG', 'updateSwagger', 'swaggerInput', util.inspect(swaggerInput, {showHidden: false, depth: null}))
     const original = clone(swaggerInput);
     this.log('setting binary mime types')
     swaggerInput["x-amazon-apigateway-binary-media-types"] = this.serverless.service.custom.apigwBinary.types;
