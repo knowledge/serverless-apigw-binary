@@ -124,11 +124,12 @@ class BinarySupport {
   }
 
   putSwagger(swagger) {
-    console.log('DEBUG', 'putSwagger', 'swagger', util.inspect(swaggerInput, {showHidden: false, depth: null}))
+    console.log('DEBUG', 'putSwagger', 'swagger', util.inspect(swagger, {showHidden: false, depth: null}))
     return this.provider.request('APIGateway', 'putRestApi', { restApiId: this.apiId, mode: 'merge', body: JSON.stringify(swagger) });
   }
 
   createDeployment() {
+    console.log('DEBUG', 'createDeployment', util.inspect({ restApiId: this.apiId, stageName: this.stage }, {showHidden: false, depth: null}))
     return this.provider.request('APIGateway', 'createDeployment', { restApiId: this.apiId, stageName: this.stage });
   }
 
