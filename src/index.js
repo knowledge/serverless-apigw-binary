@@ -81,11 +81,14 @@ class BinarySupport {
     //     https://github.com/awslabs/aws-serverless-express/issues/58#issuecomment-322263402
     return this.ensureApiId()
       .then(() => this.getCurrentSwagger())
-      .then(swaggerInput => this.updateSwagger(swaggerInput));
+      .then(swaggerInput => this.updateSwagger(swaggerInput))
+      .catch((error)=> {
+        console.log('DEBUG', 'ensureApiId', util.inspect(error, {showHidden: false, depth: null})
+      });
   }
 
   updateSwagger(swaggerInput) {
-    console.log('DEBUG', 'updateSwagger', 'swaggerInput', util.inspect(swaggerInput, {showHidden: false, depth: null}))
+    console.log('DEBUG', 'updateSwagger', 'swaggerInput')
     const original = clone(swaggerInput);
     this.log('setting binary mime types')
     swaggerInput["x-amazon-apigateway-binary-media-types"] = this.serverless.service.custom.apigwBinary.types;
@@ -124,12 +127,12 @@ class BinarySupport {
   }
 
   putSwagger(swagger) {
-    console.log('DEBUG', 'putSwagger', 'swagger', util.inspect(swagger, {showHidden: false, depth: null}))
+    console.log('DEBUG', 'putSwagger', 'swagger')
     return this.provider.request('APIGateway', 'putRestApi', { restApiId: this.apiId, mode: 'merge', body: JSON.stringify(swagger) });
   }
 
   createDeployment() {
-    console.log('DEBUG', 'createDeployment', util.inspect({ restApiId: this.apiId, stageName: this.stage }, {showHidden: false, depth: null}))
+    console.log('DEBUG', 'createDeployment')
     return this.provider.request('APIGateway', 'createDeployment', { restApiId: this.apiId, stageName: this.stage });
   }
 
