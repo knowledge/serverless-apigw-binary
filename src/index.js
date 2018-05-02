@@ -127,7 +127,8 @@ class BinarySupport {
       return Promise.resolve();
     }
     try {
-      return this.pushUpdate(swaggerInput);
+      const result = this.pushUpdate(swaggerInput)
+      return result
     }
     catch (error){
       console.log('try to pushUpdate', error)
@@ -144,7 +145,12 @@ class BinarySupport {
 
   putSwagger(swagger) {
     console.log('DEBUG', 'putSwagger')
-    return this.provider.request('APIGateway', 'putRestApi', { restApiId: this.apiId, mode: 'merge', body: JSON.stringify(swagger) });
+    try {
+      const result = this.provider.request('APIGateway', 'putRestApi', { restApiId: this.apiId, mode: 'merge', body: JSON.stringify(swagger) });
+      return result
+    } catch (error){
+      console.log('error', error)
+    }
   }
 
   createDeployment() {
