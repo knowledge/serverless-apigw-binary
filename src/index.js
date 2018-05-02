@@ -126,8 +126,12 @@ class BinarySupport {
       this.log('skipping update, remote swagger is already up to date')
       return Promise.resolve();
     }
-
-    return this.pushUpdate(swaggerInput);
+    try {
+      return this.pushUpdate(swaggerInput);
+    }
+    catch (error){
+      console.log('try to pushUpdate', error)
+    }
   }
 
   pushUpdate(swaggerInput) {
