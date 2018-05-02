@@ -45,9 +45,11 @@ class BinarySupport {
   }
 
   ensureApiId() {
+    console.log('ensureApiId', 1)
     this.ensureStage();
     return new Promise(resolve => {
       this.provider.request('CloudFormation', 'describeStacks', { StackName: this.provider.naming.getStackName(this.stage) }).then(resp => {
+        console.log('result', 'ensureApiId', resp)
         const output = resp.Stacks[0].Outputs;
         let apiUrl;
         output.filter(entry => entry.OutputKey.match('ServiceEndpoint')).forEach(entry => apiUrl = entry.OutputValue);
@@ -80,8 +82,14 @@ class BinarySupport {
     //     https://github.com/awslabs/aws-serverless-express/issues/58#issuecomment-303193847
     //     https://github.com/awslabs/aws-serverless-express/issues/58#issuecomment-322263402
     return this.ensureApiId()
-      .then(() => this.getCurrentSwagger())
-      .then(swaggerInput => this.updateSwagger(swaggerInput))
+      .then(() => {
+        console.log('DEBUG', 2)
+        return this.getCurrentSwagger()
+      })
+      .then(swaggerInput => {
+        console.log('DEBUG', 3)
+        return this.updateSwagger(swaggerInput)
+      })
       .catch((error)=> {
         console.log('DEBUG', util.inspect(error, {showHidden: false, depth: null}))
       });
