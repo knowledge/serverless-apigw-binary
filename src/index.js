@@ -132,11 +132,14 @@ class BinarySupport {
 
   pushUpdate(swaggerInput) {
     return this.putSwagger(swaggerInput)
-      .then(() => this.createDeployment());
+      .then(() => this.createDeployment())
+      .catch((error)=>{
+        console.log('DEBUG', 'pushUpdate', error)
+      });
   }
 
   putSwagger(swagger) {
-    console.log('DEBUG', 'putSwagger', 'swagger')
+    console.log('DEBUG', 'putSwagger')
     return this.provider.request('APIGateway', 'putRestApi', { restApiId: this.apiId, mode: 'merge', body: JSON.stringify(swagger) });
   }
 
