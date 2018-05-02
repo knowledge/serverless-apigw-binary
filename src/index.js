@@ -83,7 +83,7 @@ class BinarySupport {
       .then(() => this.getCurrentSwagger())
       .then(swaggerInput => this.updateSwagger(swaggerInput))
       .catch((error)=> {
-        console.log('DEBUG', 'ensureApiId', util.inspect(error, {showHidden: false, depth: null})
+        console.log('DEBUG', util.inspect(error, {showHidden: false, depth: null}))
       });
   }
 
