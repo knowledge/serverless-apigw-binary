@@ -60,6 +60,7 @@ class BinarySupport {
   }
 
   getCurrentSwagger() {
+    console.log('getCurrentSwagger')
     return this.provider.request('APIGateway', 'getExport', {
       restApiId: this.apiId,
       exportType: 'swagger',
